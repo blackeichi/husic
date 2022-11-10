@@ -8,6 +8,9 @@ module.exports = {
     extend: {},
     fontFamily: {
       Cafe24Shiningstar: ["Cafe24Shiningstar"],
+      MonoplexKRRegular: ["MonoplexKR-Regular"],
+      KOFIHDrLEEJWTTF: ["KOFIHDrLEEJWTTF-B"],
+      Pretendard: ["Pretendard-Regular"],
     },
   },
   plugins: [],
