@@ -33,7 +33,7 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="w-full h-screen flex justify-center items-center">
+      <div className="w-full h-screen sm:mt-40 mt-20   flex justify-center items-center">
         <div className="z-10 w-full sm:h-1/2 h-80 max-w-2xl font-Cafe24Shiningstar text-5xl rounded-2xl bg-gray-900 flex flex-col items-center md:p-10 p-4 justify-between text-white">
           <h1>Han Jeong Woo</h1>
           <div className="flex flex-col font-MonoplexKRRegular text-lg gap-5">
