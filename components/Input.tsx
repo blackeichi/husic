@@ -18,9 +18,15 @@ export const Input = ({
   required,
 }: InputProps) => {
   return (
-    <div className="">
+    <div className="text-white flex flex-col gap-2 w-full">
       <label>{label}</label>
-      <input></input>
+      <input
+        id={name}
+        required={required}
+        {...register}
+        type={type}
+        className="text-black w-full rounded-md border px-3 py-2  placeholder-gray-400 focus:border-y-blue-400 focus:outline-none focus:ring-border-y-blue-400"
+      />
     </div>
   );
 };
