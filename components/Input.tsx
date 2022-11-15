@@ -16,6 +16,7 @@ export const Input = ({
   type,
   register,
   required,
+  ...rest
 }: InputProps) => {
   return (
     <div className="text-white flex flex-col gap-2 w-full">
