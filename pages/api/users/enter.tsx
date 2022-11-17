@@ -12,29 +12,44 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const { username, password, confirmPw } = req.body;
-  let hashPW: any;
   if (confirmPw) {
     //join
     bcrypt.genSalt(saltRounds, function (err: any, salt: any) {
       bcrypt.hash(password, salt, async function (err: any, hash: any) {
-        const user = await client.user.upsert({
+        const user = await client.user.findUnique({
           where: {
             username,
           },
-          create: {
-            username,
-            password: hash,
-          },
-          update: {},
         });
+        if (user) {
+          res.status(404).end();
+          console.log("이미 존재하는 아이디입니다.");
+        } else {
+          await client.user.create({
+            data: {
+              username,
+              password: hash,
+            },
+          });
+        }
       });
     });
   } else {
     //Login
-    bcrypt.compare(password, hashPW, function (err: any, result: any) {
-      console.log(result);
+    const user = await client.user.findUnique({
+      where: {
+        username,
+      },
     });
+    if (user) {
+      bcrypt.compare(password, user.password, function (err: any, result: any) {
+        if (result) {
+        } else {
+          res.status(404).end();
+          console.log("비밀번호가 틀렸습니다.");
+        }
+      });
+    }
   }
-  console.log(hashPW);
-  res.status(200).json({ name: "John Doe" });
+  res.status(200).end();
 }
