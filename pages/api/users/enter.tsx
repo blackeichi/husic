@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import client from "../../../libs/server/client";
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
@@ -11,19 +12,29 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const { username, password, confirmPw } = req.body;
-  let hashedPw = "";
+  let hashPW: any;
   if (confirmPw) {
-    //Join
+    //join
+    bcrypt.genSalt(saltRounds, function (err: any, salt: any) {
+      bcrypt.hash(password, salt, async function (err: any, hash: any) {
+        const user = await client.user.upsert({
+          where: {
+            username,
+          },
+          create: {
+            username,
+            password: hash,
+          },
+          update: {},
+        });
+      });
+    });
   } else {
     //Login
-  }
-  bcrypt.genSalt(saltRounds, function (err: any, salt: any) {
-    bcrypt.hash(password, salt, function (err: any, hash: any) {
-      hashedPw = hash;
+    bcrypt.compare(password, hashPW, function (err: any, result: any) {
+      console.log(result);
     });
-  });
-  bcrypt.compare(password, hashedPw, function (err: any, result: any) {
-    console.log(result);
-  });
+  }
+  console.log(hashPW);
   res.status(200).json({ name: "John Doe" });
 }
