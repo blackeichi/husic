@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { cls } from "../libs/utils";
+import { useSetRecoilState } from "recoil";
+import { enterState } from "../libs/client/atom";
+import { cls } from "../libs/client/utils";
 
 type IBtn = {
   href: string;
@@ -8,8 +10,12 @@ type IBtn = {
 };
 
 export const FloatingBtn = ({ href, isBlack, Text }: IBtn) => {
+  const setEnter = useSetRecoilState(enterState);
   return (
     <Link
+      onClick={() => {
+        isBlack ? setEnter("join") : setEnter("login");
+      }}
       href={{
         pathname: href,
         query: {
