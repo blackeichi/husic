@@ -1,14 +1,16 @@
 import { useState } from "react";
 
-type UseMutaitionState = {
+type UseMutaitionState<T> = {
   loading: boolean;
   data?: object;
   error?: object;
 };
-type UseMutaitionResult = [(data: any) => void, UseMutaitionState];
+type UseMutaitionResult<T> = [(data: any) => void, UseMutaitionState<T>];
 
-export default function useMutaion(url: string): UseMutaitionResult {
-  const [state, setState] = useState<UseMutaitionState>({
+export default function useMutaion<T = any>(
+  url: string
+): UseMutaitionResult<T> {
+  const [state, setState] = useState<UseMutaitionState<T>>({
     loading: false,
     data: undefined,
     error: undefined,
@@ -22,10 +24,11 @@ export default function useMutaion(url: string): UseMutaitionResult {
       },
       body: JSON.stringify(data),
     })
-      .then((response) => response.json)
+      .then((response) => response.json())
       .then((data) => setState((prev) => ({ ...prev, data })))
       .catch((error) => setState((prev) => ({ ...prev, error })))
       .finally(() => setState((prev) => ({ ...prev, loading: false })));
+    console.log(state);
   }
   return [mutation, { ...state }];
 }

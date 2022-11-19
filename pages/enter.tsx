@@ -12,12 +12,17 @@ type EnterForm = {
   password?: string;
   confirmPw?: string;
 };
+interface MutationResult {
+  ok: boolean;
+}
 
 export default function Enter() {
   const router = useRouter();
   const { form } = router.query;
   const { register, handleSubmit, resetField } = useForm<EnterForm>();
-  const [enter, { loading, data, error }] = useMutaion("/api/users/enter");
+  const [enter, { loading, data, error }] =
+    useMutaion<MutationResult>("/api/users/enter");
+  console.log(data);
   const onValid = (formData: EnterForm) => {
     if (loading) return;
     enter(formData);
@@ -28,6 +33,7 @@ export default function Enter() {
     resetField("password");
     resetField("confirmPw");
   }, [enterValue, resetField]);
+  useEffect(() => {});
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center text-white sm:gap-6 gap-3 pt-10">
       <h1 className="text-2xl font-MonoplexKRRegular">

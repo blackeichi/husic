@@ -1,15 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import client from "../../../libs/server/client";
+import withHandler from "../../../libs/server/withHandler";
+import { withApiSession } from "../../../libs/server/withSession";
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-type Data = {
-  name: string;
+export type ResponseType = {
+  ok: boolean;
+  [key: string]: any;
 };
 
-export default async function handler(
+async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<ResponseType>
 ) {
   const { username, password, confirmPw } = req.body;
   if (confirmPw) {
@@ -31,6 +34,7 @@ export default async function handler(
               password: hash,
             },
           });
+          res.status(200).end();
         }
       });
     });
@@ -42,14 +46,26 @@ export default async function handler(
       },
     });
     if (user) {
-      bcrypt.compare(password, user.password, function (err: any, result: any) {
-        if (result) {
-        } else {
-          res.status(404).end();
-          console.log("비밀번호가 틀렸습니다.");
+      bcrypt.compare(
+        password,
+        user.password,
+        async function (err: any, result: any) {
+          if (result) {
+            req.session.user = {
+              id: user.id,
+            };
+            await req.session.save();
+            console.log("로그인!");
+            res.json({
+              ok: true,
+            });
+          } else {
+            res.status(404).json({ ok: false });
+            console.log("비밀번호가 틀렸습니다.");
+          }
         }
-      });
+      );
     }
   }
-  res.status(200).end();
 }
+export default withApiSession(withHandler("POST", handler));
