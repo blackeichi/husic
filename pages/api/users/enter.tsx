@@ -25,8 +25,9 @@ async function handler(
           },
         });
         if (user) {
-          res.status(404).end();
-          console.log("이미 존재하는 아이디입니다.");
+          res
+            .status(404)
+            .json({ ok: false, error: "이미 존재하는 아이디입니다." });
         } else {
           await client.user.create({
             data: {
@@ -34,7 +35,9 @@ async function handler(
               password: hash,
             },
           });
-          res.status(200).end();
+          res.status(200).json({
+            ok: true,
+          });
         }
       });
     });
@@ -55,13 +58,13 @@ async function handler(
               id: user.id,
             };
             await req.session.save();
-            console.log("로그인!");
-            res.json({
+            res.status(200).json({
               ok: true,
             });
           } else {
-            res.status(404).json({ ok: false });
-            console.log("비밀번호가 틀렸습니다.");
+            res
+              .status(404)
+              .json({ ok: false, error: "비밀번호가 틀렸습니다." });
           }
         }
       );

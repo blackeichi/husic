@@ -1,11 +1,12 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { Button } from "../components/Buttton";
 import { Input } from "../components/Input";
 import { enterState } from "../libs/client/atom";
 import useMutaion from "../libs/client/useMutation";
+import useUser from "../libs/client/useUser";
 
 type EnterForm = {
   username?: string;
@@ -22,22 +23,39 @@ export default function Enter() {
   const { register, handleSubmit, resetField } = useForm<EnterForm>();
   const [enter, { loading, data, error }] =
     useMutaion<MutationResult>("/api/users/enter");
-  console.log(data);
   const onValid = (formData: EnterForm) => {
     if (loading) return;
     enter(formData);
   };
-  const enterValue = useRecoilValue(enterState);
+  const [enterValue, setEnter] = useRecoilState(enterState);
   useEffect(() => {
     resetField("username");
     resetField("password");
     resetField("confirmPw");
   }, [enterValue, resetField]);
-  useEffect(() => {});
+  useEffect(() => {
+    if (form === "Join") {
+      if (data?.ok) {
+        setEnter("login");
+      }
+    } else {
+      if (data?.ok) {
+        router.push("/");
+      }
+    }
+  }, [router, data, form, setEnter]);
+  const user = useUser();
+  useEffect(() => {
+    if (user) {
+      window.alert("비정상 접근입니다.");
+      router.push("/");
+    }
+  }, [router, user]);
+
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center text-white sm:gap-6 gap-3 pt-10">
       <h1 className="text-2xl font-MonoplexKRRegular">
-        {form === "Join" ? "회원가입" : "로그인"}
+        {enterValue === "join" ? "회원가입" : "로그인"}
       </h1>
       <form
         onSubmit={handleSubmit(onValid)}
@@ -61,10 +79,10 @@ export default function Enter() {
           })}
           required
         />
-        {form === "Join" ? (
+        {enterValue === "join" ? (
           <Input
             label={"Confirm Password"}
-            name={"password"}
+            name={"confirmPw"}
             type={"password"}
             register={register("confirmPw", {
               required: true,
