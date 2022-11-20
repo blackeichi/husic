@@ -24,10 +24,14 @@ export default function App({ Component, pageProps }: AppProps) {
             Husic
           </h1>
           {user ? (
-            <div className="flex gap-10 sm:mr-10 sm:text-xl lg:text-2xl items-center">
-              <FloatingBtn isBlack={false} Text={"Upload"} href="/enter" />
-              <FloatingBtn isBlack={true} Text={"Watch"} href="/enter" />
-            </div>
+            user.isLoading ? (
+              <></>
+            ) : (
+              <div className="flex gap-10 sm:mr-10 sm:text-xl lg:text-2xl items-center">
+                <FloatingBtn isBlack={false} Text={"Upload"} href="/enter" />
+                <FloatingBtn isBlack={true} Text={"Watch"} href="/enter" />
+              </div>
+            )
           ) : (
             <div className="flex gap-10 sm:mr-10 sm:text-xl lg:text-2xl items-center">
               <FloatingBtn isBlack={false} Text={"Login"} href="/enter" />

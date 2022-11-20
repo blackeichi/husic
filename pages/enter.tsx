@@ -44,11 +44,10 @@ export default function Enter() {
       }
     }
   }, [router, data, form, setEnter]);
-  const user = useUser();
+  const user = useUser(false);
   useEffect(() => {
-    if (user) {
-      window.alert("비정상 접근입니다.");
-      router.push("/");
+    if (user?.user.profile) {
+      router.replace("/");
     }
   }, [router, user]);
 
