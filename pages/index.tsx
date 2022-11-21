@@ -3,12 +3,47 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useRef } from "react";
+import YouTube, { YouTubeProps } from "react-youtube";
+import useYoutube from "../libs/client/useYoutube";
+import { BeatLoader } from "react-spinners";
+import { VideoThumb } from "../components/VideoThumb";
+
+/* const opts: YouTubeProps["opts"] = {
+  height: "390",
+  width: "640",
+  playerVars: {
+    // https://developers.google.com/youtube/player_parameters
+    autoplay: 1,
+  },
+};
+<YouTube
+videoId="YjOHCcAGQQA"
+opts={opts}
+onEnd={(e) => {
+  e.target.stopVideo(0);
+}}
+/> */
+
+export type videoType = {
+  channelTitle: string;
+  createdAt: string;
+  description: string;
+  id: number;
+  thumbnails: string;
+  title: string;
+  updatedAt: string;
+  userId: number;
+  youtubeId: string;
+};
 
 export default function Home() {
   const element = useRef<HTMLDivElement>(null);
   const onMoveBox = () => {
     element.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+  const data = useYoutube();
+  const videos = data?.data?.videos;
+  console.log(videos);
   return (
     <div className="w-full h-full flex flex-col">
       <div className="w-full h-screen relative flex items-center justify-end px-10 md:px-30">
@@ -66,8 +101,18 @@ export default function Home() {
       </div>
       <div
         ref={element}
-        className="w-full h-screen relative flex flex-col"
-      ></div>
+        className="w-full h-screen relative flex flex-col items-center"
+      >
+        {videos ? (
+          <div>
+            {videos.map((video: videoType) => (
+              <VideoThumb key={video.id} video={video} />
+            ))}
+          </div>
+        ) : (
+          <BeatLoader color="#36d7b7" />
+        )}
+      </div>
     </div>
   );
 }
