@@ -1,21 +1,19 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "../../../libs/server/client";
 import withHandler from "../../../libs/server/withHandler";
-import { withApiSession } from "../../../libs/server/withSession";
-import { ResponseType } from "./enter";
-
+import { ResponseType } from "../users/enter";
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const profile = await client.user.findUnique({
-    where: { id: req.session.user?.id },
+  const videos = await client.video.findMany({
+    take: 4,
   });
-  if (profile) {
+  if (videos) {
     res.json({
       ok: true,
-      profile,
+      videos,
     });
   }
 }
-export default withApiSession(withHandler(["GET"], handler));
+export default withHandler(["GET"], handler);

@@ -6,14 +6,23 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const videos = await client.video.findMany({
-    take: 4,
-  });
-  if (videos) {
-    res.json({
-      ok: true,
-      videos,
+  if (req.method === "GET") {
+    const videos = await client.video.findMany();
+    if (videos) {
+      res.json({
+        ok: true,
+        videos,
+      });
+    }
+  }
+  if (req.method === "POST") {
+    const {
+      body: { title },
+      session: { user },
+    } = req;
+    const videos = await client.video.create({
+      data: { title, user: { connect: { id: user?.id } } },
     });
   }
 }
-export default withHandler("GET", handler);
+export default withHandler(["GET", "POST"], handler);

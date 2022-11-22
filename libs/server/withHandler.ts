@@ -1,11 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
+type method = "GET" | "POST" | "DELETE";
+
 export default function withHandler(
-  method: "GET" | "POST" | "DELETE",
+  method: method[],
   fn: (req: NextApiRequest, res: NextApiResponse) => void
 ) {
   return async function (req: NextApiRequest, res: NextApiResponse) {
-    if (req.method !== method) {
+    if (req.method && !method.includes(req.method as any)) {
       return res.status(405).end();
     }
     try {

@@ -41,7 +41,7 @@ export default function Home() {
   const onMoveBox = () => {
     element.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-  const data = useYoutube();
+  const data = useYoutube("home");
   const videos = data?.data?.videos;
   console.log(videos);
   return (
