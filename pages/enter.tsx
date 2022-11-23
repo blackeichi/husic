@@ -32,7 +32,7 @@ export default function Enter() {
     resetField("username");
     resetField("password");
     resetField("confirmPw");
-  }, [enterValue, resetField]);
+  }, [resetField]);
   useEffect(() => {
     if (form === "Join") {
       if (data?.ok) {
@@ -46,11 +46,10 @@ export default function Enter() {
   }, [router, data, form, setEnter]);
   const user = useUser(false);
   useEffect(() => {
-    if (user?.user.profile) {
+    if (user?.user?.profile) {
       router.replace("/");
     }
   }, [router, user]);
-
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center text-white sm:gap-6 gap-3 pt-10">
       <h1 className="text-2xl font-MonoplexKRRegular">

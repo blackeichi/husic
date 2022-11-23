@@ -43,7 +43,6 @@ export default function Home() {
   };
   const data = useYoutube("home");
   const videos = data?.data?.videos;
-  console.log(videos);
   return (
     <div className="w-full h-full flex flex-col">
       <div className="w-full h-screen relative flex items-center justify-end px-10 md:px-30">

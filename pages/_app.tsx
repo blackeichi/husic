@@ -28,8 +28,8 @@ export default function App({ Component, pageProps }: AppProps) {
               <></>
             ) : (
               <div className="flex gap-10 sm:mr-10 sm:text-xl lg:text-2xl items-center">
-                <FloatingBtn isBlack={false} Text={"Upload"} href="/enter" />
-                <FloatingBtn isBlack={true} Text={"Watch"} href="/enter" />
+                <FloatingBtn isBlack={false} Text={"Upload"} href="/upload" />
+                <FloatingBtn isBlack={true} Text={"Watch"} href="/watch" />
               </div>
             )
           ) : (
