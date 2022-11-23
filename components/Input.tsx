@@ -7,6 +7,8 @@ type InputProps = {
   type: string;
   register: UseFormRegisterReturn;
   required: boolean;
+  auto?: boolean;
+  icon?: any;
 };
 
 export const Input = ({
@@ -16,12 +18,17 @@ export const Input = ({
   type,
   register,
   required,
-  ...rest
+  auto = false,
+  icon,
 }: InputProps) => {
   return (
     <div className="text-white flex flex-col gap-2 w-full">
-      <label>{label}</label>
+      <label>
+        {icon && icon}
+        {" " + label}
+      </label>
       <input
+        autoFocus={auto}
         id={name}
         required={required}
         {...register}

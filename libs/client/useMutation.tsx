@@ -28,7 +28,6 @@ export default function useMutaion<T = any>(
       .then((data) => setState((prev) => ({ ...prev, data })))
       .catch((error) => setState((prev) => ({ ...prev, error })))
       .finally(() => setState((prev) => ({ ...prev, loading: false })));
-    console.log(state);
   }
   return [mutation, { ...state }];
 }

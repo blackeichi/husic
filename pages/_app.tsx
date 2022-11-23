@@ -15,8 +15,8 @@ export default function App({ Component, pageProps }: AppProps) {
   };
   return (
     <RecoilRoot>
-      <div className="bg-black w-full">
-        <div className="w-full p-3 bg-black fixed flex justify-between items-center z-20 text-white">
+      <div className="bg-black w-full box-border sm:pt-0">
+        <div className="w-full p-3 bg-black fixed flex justify-between items-center z-20 top-0 text-white">
           <h1
             onClick={goHome}
             className="font-Cafe24Shiningstar text-6xl md:text-8xl cursor-pointer"

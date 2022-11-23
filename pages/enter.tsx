@@ -48,6 +48,7 @@ export default function Enter() {
   useEffect(() => {
     if (user?.user?.profile) {
       router.replace("/");
+      window.alert("비정상 접근입니다.");
     }
   }, [router, user]);
   return (

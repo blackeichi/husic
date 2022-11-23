@@ -23,13 +23,14 @@ model User {
 }
 model Video {
   id Int @id @default(autoincrement())
-  title String
-  youtubeId String
-  thumbnails String
+  title String @db.MediumText
+  youtubeId String @unique
   channelTitle String
+  thumb String
+  channelThumb String
   description String @db.MediumText
+  createdAt String
+  tags String @db.MediumText
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
