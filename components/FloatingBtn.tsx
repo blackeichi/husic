@@ -26,7 +26,7 @@ export const FloatingBtn = ({ href, isBlack, Text }: IBtn) => {
     >
       <h1
         className={cls(
-          "cursor-pointer",
+          "cursor-pointer font-MonoplexKRRegular",
           isBlack
             ? "bg-white text-black px-4 py-2 rounded-xl hover:bg-gray-400 duration-200"
             : ""
