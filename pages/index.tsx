@@ -1,5 +1,5 @@
 import { faBlogger, faGithub } from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faArrowDown, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useRef } from "react";
@@ -7,6 +7,7 @@ import YouTube, { YouTubeProps } from "react-youtube";
 import useYoutube from "../libs/client/useYoutube";
 import { BeatLoader } from "react-spinners";
 import { VideoThumb } from "../components/VideoThumb";
+import { useRouter } from "next/router";
 
 /* const opts: YouTubeProps["opts"] = {
   height: "390",
@@ -25,15 +26,15 @@ onEnd={(e) => {
 /> */
 
 export type videoType = {
-  channelTitle: string;
-  createdAt: string;
-  description: string;
   id: number;
-  thumbnails: string;
   title: string;
-  updatedAt: string;
-  userId: number;
+  createdAt: string;
+  channelTitle: string;
+  description: string;
   youtubeId: string;
+  channelThumb: string;
+  tags: string;
+  thumb: string;
 };
 
 export default function Home() {
@@ -43,23 +44,31 @@ export default function Home() {
   };
   const data = useYoutube("home");
   const videos = data?.data?.videos;
+  const route = useRouter();
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full h-full flex flex-col overflow-hidden">
       <div className="w-full h-screen relative flex items-center justify-end px-10 md:px-30">
         <div className="w-full h-full flex items-end absolute">
           <img className="bg-#9C5D3C h-3/5 lg:h-4/5" src="/img/rhythm.gif" />
         </div>
-        <div className="text-white flex flex-col text-right items-end justify-center relative md:mt-72 mb-20">
-          <h1 className="lg:text-8xl sm:text-6xl text-5xl z-10 font-thin">
+        <div className="text-white flex flex-col items-end text-right justify-center relative md:mt-72 mb-20">
+          <h1
+            id="aniText"
+            className="lg:text-8xl sm:text-6xl text-5xl z-10 sm:block hidden"
+          >
+            Let&apos;s just listen to
+          </h1>
+          <h1 className="lg:text-8xl sm:text-6xl text-5xl text-right z-10 sm:hidden block">
             Let&apos;s just listen to
           </h1>
           <div
             onClick={onMoveBox}
-            className="border-2 sm:w-36 w-24 py-2 z-10 box-border flex items-center justify-center cursor-pointer mt-5 hover:scale-105 duration-200"
+            className="border-2 px-4 py-3 z-10 box-border flex items-center justify-center cursor-pointer sm:mt-10 mt-5 hover:scale-105 duration-200 gap-4 sm:text-3xl text-xl"
           >
-            <h1 className="sm:text-5xl text-2xl text-white font-bold font-KOFIHDrLEEJWTTF">
+            <h1 className="text-white font-bold font-KOFIHDrLEEJWTTF sm:text-6xl text-3xl">
               Husic
             </h1>
+            <FontAwesomeIcon icon={faArrowDown} />
           </div>
           <img
             className="rounded-lg absolute w-2/5 md:block hidden"
@@ -100,10 +109,21 @@ export default function Home() {
       </div>
       <div
         ref={element}
-        className="w-full h-screen relative flex flex-col items-center"
+        className="w-full min-h-screen relative flex flex-col items-center pb-7 pt-20"
       >
+        <div className="flex text-white font-MonoplexKRRegular w-full justify-between sm:px-10 px-5 sm:text-base text-sm sm:py-10 py-5 items-center">
+          <h1 className="font-bold sm:text-2xl text-lg">--RECOMMENDED</h1>
+          <h1
+            onClick={() => {
+              route.push("/watch");
+            }}
+            className="cursor-pointer"
+          >
+            More Husic..
+          </h1>
+        </div>
         {videos ? (
-          <div>
+          <div className="flex flex-col gap-10">
             {videos.map((video: videoType) => (
               <VideoThumb key={video.id} video={video} />
             ))}
