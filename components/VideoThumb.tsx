@@ -6,7 +6,7 @@ type Type = {
 
 export const VideoThumb = ({ video }: Type) => {
   return (
-    <div className="flex sm:flex-nowrap  flex-wrap sm:w-screen w-72 items-center text-white font-MonoplexKRRegular sm:px-10 px-2 gap-4 cursor-pointer hover:scale-105 delay-300 duration-200">
+    <div className="flex sm:flex-nowrap  flex-wrap lg:w-full sm:w-screen w-72 items-center text-white font-MonoplexKRRegular sm:px-10 px-2 gap-4 cursor-pointer hover:scale-105 delay-300 duration-200">
       <img className="sm:w-96 w-72 rounded-lg" src={video.thumb} />
       <div className="flex flex-col gap-2  whitespace-nowrap w-full overflow-hidden">
         <h1 className="font-bold sm:text-base text-sm ">{video.title}</h1>

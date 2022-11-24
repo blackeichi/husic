@@ -45,6 +45,7 @@ export default function Home() {
   const data = useYoutube("home");
   const videos = data?.data?.videos;
   const route = useRouter();
+  console.log(data);
   return (
     <div className="w-full h-full flex flex-col overflow-hidden">
       <div className="w-full h-screen relative flex items-center justify-end px-10 md:px-30">
@@ -117,7 +118,7 @@ export default function Home() {
             onClick={() => {
               route.push("/watch");
             }}
-            className="cursor-pointer"
+            className="cursor-pointer hover:scale-105 duration-200"
           >
             More Husic..
           </h1>

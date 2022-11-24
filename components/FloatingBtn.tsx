@@ -28,7 +28,7 @@ export const FloatingBtn = ({ href, isBlack, Text }: IBtn) => {
         className={cls(
           "cursor-pointer",
           isBlack
-            ? "bg-white text-black px-4 py-2 rounded-xl hover:bg-orange-200 duration-200"
+            ? "bg-white text-black px-4 py-2 rounded-xl hover:bg-gray-400 duration-200"
             : ""
         )}
       >

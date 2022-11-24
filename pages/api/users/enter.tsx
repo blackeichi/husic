@@ -68,6 +68,8 @@ async function handler(
           }
         }
       );
+    } else {
+      res.status(404).json({ ok: false, error: "존재하지 않는 아이디입니다." });
     }
   }
 }

@@ -8,7 +8,11 @@ async function handler(
 ) {
   const videos = await client.video.findMany({
     take: 4,
+    include: {
+      user: true,
+    },
   });
+  console.log("hello");
   if (videos) {
     res.json({
       ok: true,

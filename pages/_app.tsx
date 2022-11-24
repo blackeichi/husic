@@ -6,6 +6,13 @@ import { FloatingBtn } from "../components/FloatingBtn";
 import { useRouter } from "next/router";
 import { RecoilRoot } from "recoil";
 import useUser from "../libs/client/useUser";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFileUpload,
+  faHeadphones,
+  faUpload,
+  faUserCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -13,6 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const goHome = () => {
     router.push("/");
   };
+  const [open, setOpen] = useState(false);
   return (
     <RecoilRoot>
       <div className="bg-black w-full box-border sm:pt-0">
@@ -23,13 +31,32 @@ export default function App({ Component, pageProps }: AppProps) {
           >
             Husic
           </h1>
-          {user ? (
+          {user?.user?.ok ? (
             user.isLoading ? (
               <></>
             ) : (
-              <div className="flex gap-10 sm:mr-10 sm:text-xl lg:text-2xl items-center">
-                <FloatingBtn isBlack={false} Text={"Upload"} href="/upload" />
-                <FloatingBtn isBlack={true} Text={"Watch"} href="/watch" />
+              <div className="flex sm:gap-7 gap-2 sm:mr-10 sm:text-xl lg:text-2xl items-center relative">
+                <div className="gap-7 items-center sm:flex hidden">
+                  <FloatingBtn isBlack={false} Text={"Upload"} href="/upload" />
+                  <FloatingBtn isBlack={true} Text={"Watch"} href="/watch" />
+                </div>
+                <div className="gap-2 items-center sm:hidden flex text-black">
+                  <div className="bg-white w-6 h-6 rounded-full flex items-center justify-center">
+                    <FontAwesomeIcon icon={faFileUpload} />
+                  </div>
+                  <div className="bg-white w-6 h-6 rounded-full flex items-center justify-center">
+                    <FontAwesomeIcon icon={faHeadphones} />
+                  </div>
+                </div>
+                <div
+                  onClick={() => setOpen((prev) => !prev)}
+                  className="sm:text-4xl text-2xl cursor-pointer"
+                >
+                  <FontAwesomeIcon icon={faUserCircle} />
+                </div>
+                {open && (
+                  <div className="bg-white w-48 h-72 absolute -right-1 top-14 rounded-lg"></div>
+                )}
               </div>
             )
           ) : (
@@ -39,7 +66,9 @@ export default function App({ Component, pageProps }: AppProps) {
             </div>
           )}
         </div>
-        <Component {...pageProps} />
+        <div onClick={() => setOpen(false)}>
+          <Component {...pageProps} />
+        </div>
       </div>
     </RecoilRoot>
   );

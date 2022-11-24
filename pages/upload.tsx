@@ -151,7 +151,7 @@ export default function Upload() {
           />
           <button
             className={cls(
-              "bg-white w-full py-2 rounded-md border text-black focus:border-y-blue-400 focus:outline-none focus:ring-border-y-blue-400 hover:bg-orange-200 duration-200",
+              "bg-white w-full py-2 rounded-md border text-black focus:border-y-blue-400 focus:outline-none focus:ring-border-y-blue-400 hover:bg-gray-400 duration-200",
               apiloading ? "disabled" : ""
             )}
           >

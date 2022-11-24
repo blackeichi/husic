@@ -32,7 +32,7 @@ export default function Enter() {
     resetField("username");
     resetField("password");
     resetField("confirmPw");
-  }, [resetField]);
+  }, [resetField, enterValue]);
   useEffect(() => {
     if (form === "Join") {
       if (data?.ok) {
@@ -90,6 +90,7 @@ export default function Enter() {
           />
         ) : null}
         <Button />
+        {data?.error && <h1 className="text-red-400 text-sm">{data?.error}</h1>}
       </form>
     </div>
   );
