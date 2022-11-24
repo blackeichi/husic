@@ -35,6 +35,10 @@ export type videoType = {
   channelThumb: string;
   tags: string;
   thumb: string;
+  user: {
+    id: number;
+    username: string;
+  };
 };
 
 export default function Home() {
@@ -45,7 +49,6 @@ export default function Home() {
   const data = useYoutube("home");
   const videos = data?.data?.videos;
   const route = useRouter();
-  console.log(data);
   return (
     <div className="w-full h-full flex flex-col overflow-hidden">
       <div className="w-full h-screen relative flex items-center justify-end px-10 md:px-30">
@@ -55,11 +58,11 @@ export default function Home() {
         <div className="text-white flex flex-col items-end text-right justify-center relative md:mt-72 mb-20">
           <h1
             id="aniText"
-            className="lg:text-8xl sm:text-6xl text-5xl z-10 sm:block hidden"
+            className="lg:text-8xl sm:text-6xl text-5xl z-10 sm:block hidden font-Pretendard"
           >
             Let&apos;s just listen to
           </h1>
-          <h1 className="lg:text-8xl sm:text-6xl text-5xl text-right z-10 sm:hidden block">
+          <h1 className="lg:text-8xl sm:text-6xl text-5xl text-right z-10 sm:hidden block font-Pretendard">
             Let&apos;s just listen to
           </h1>
           <div

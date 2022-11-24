@@ -55,7 +55,10 @@ export default function App({ Component, pageProps }: AppProps) {
                   <FontAwesomeIcon icon={faUserCircle} />
                 </div>
                 {open && (
-                  <div className="bg-white w-48 h-72 absolute -right-1 top-14 rounded-lg"></div>
+                  <div className="bg-white absolute sm:-right-10 sm:top-14 right-0 top-8 rounded-lg items-center justify-center text-black sm:text-sm font-MonoplexKRRegular px-7 py-4">
+                    <h1>PROFILE</h1>
+                    <h1>LOG OUT</h1>
+                  </div>
                 )}
               </div>
             )

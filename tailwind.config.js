@@ -11,6 +11,7 @@ module.exports = {
       MonoplexKRRegular: ["MonoplexKR-Regular"],
       KOFIHDrLEEJWTTF: ["KOFIHDrLEEJWTTF-B"],
       Pretendard: ["Pretendard-Regular"],
+      Humanbumsuk: ["Humanbumsuk"],
     },
   },
   plugins: [],
