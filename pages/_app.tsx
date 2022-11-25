@@ -45,7 +45,7 @@ export default function App({ Component, pageProps }: AppProps) {
                     onClick={() => {
                       router.push("/upload");
                     }}
-                    className="bg-white w-6 h-6 rounded-full flex items-center justify-center cursor-pointer"
+                    className="bg-white w-6 h-6 rounded-full flex items-center hover:text-gray-400 duration-200 justify-center cursor-pointer"
                   >
                     <FontAwesomeIcon icon={faFileUpload} />
                   </div>
@@ -53,14 +53,14 @@ export default function App({ Component, pageProps }: AppProps) {
                     onClick={() => {
                       router.push("/watch");
                     }}
-                    className="bg-white w-6 h-6 rounded-full flex items-center justify-center cursor-pointer"
+                    className="bg-white w-6 h-6 rounded-full flex items-center hover:text-gray-400 duration-200 justify-center cursor-pointer"
                   >
                     <FontAwesomeIcon icon={faHeadphones} />
                   </div>
                 </div>
                 <div
                   onClick={() => setOpen((prev) => !prev)}
-                  className="sm:text-4xl text-2xl cursor-pointer"
+                  className="sm:text-4xl text-2xl hover:text-gray-400 duration-200 cursor-pointer"
                 >
                   <FontAwesomeIcon icon={faUserCircle} />
                 </div>
