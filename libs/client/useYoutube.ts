@@ -9,5 +9,6 @@ export default function useYoutube(home?: string) {
     home === "home" ? "/api/videos/homevideo" : "/api/videos",
     fetcher
   );
+  console.log(data);
   return { data, isLoading: !data && !error };
 }

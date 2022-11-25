@@ -41,10 +41,20 @@ export default function App({ Component, pageProps }: AppProps) {
                   <FloatingBtn isBlack={true} Text={"Watch"} href="/watch" />
                 </div>
                 <div className="gap-2 items-center sm:hidden flex text-black">
-                  <div className="bg-white w-6 h-6 rounded-full flex items-center justify-center">
+                  <div
+                    onClick={() => {
+                      router.push("/upload");
+                    }}
+                    className="bg-white w-6 h-6 rounded-full flex items-center justify-center cursor-pointer"
+                  >
                     <FontAwesomeIcon icon={faFileUpload} />
                   </div>
-                  <div className="bg-white w-6 h-6 rounded-full flex items-center justify-center">
+                  <div
+                    onClick={() => {
+                      router.push("/watch");
+                    }}
+                    className="bg-white w-6 h-6 rounded-full flex items-center justify-center cursor-pointer"
+                  >
                     <FontAwesomeIcon icon={faHeadphones} />
                   </div>
                 </div>

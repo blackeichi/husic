@@ -7,7 +7,16 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   if (req.method === "GET") {
-    const videos = await client.video.findMany();
+    const videos = await client.video.findMany({
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+          },
+        },
+      },
+    });
     if (videos) {
       res.json({
         ok: true,

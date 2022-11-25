@@ -139,7 +139,7 @@ export default function Upload() {
           className={"flex flex-col gap-1  items-center sm:w-96 w-4/5 relative"}
         >
           <Input
-            label={"Youtube ID"}
+            label={"Youtube Video ID"}
             icon={<FontAwesomeIcon color="red" icon={faYoutube} />}
             name={"id"}
             type={"text"}
