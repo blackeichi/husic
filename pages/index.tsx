@@ -9,6 +9,7 @@ import { BeatLoader } from "react-spinners";
 import { VideoThumb } from "../components/VideoThumb";
 import { useRouter } from "next/router";
 
+//watch페이지 만들기, 유저가 올린 비디오, 저장한 비디오 prisma에 올리기, 댓글기능
 /* const opts: YouTubeProps["opts"] = {
   height: "390",
   width: "640",
