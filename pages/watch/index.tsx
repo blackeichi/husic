@@ -1,7 +1,7 @@
 import { BeatLoader } from "react-spinners";
-import { videoType } from ".";
-import { VideoThumb } from "../components/VideoThumb";
-import useYoutube from "../libs/client/useYoutube";
+import { videoType } from "..";
+import { VideoThumb } from "../../components/VideoThumb";
+import useYoutube from "../../libs/client/useYoutube";
 
 export default function Upload() {
   const data = useYoutube();

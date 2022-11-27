@@ -45,6 +45,7 @@ async function handler(
           description: videoData.description,
           createdAt: videoData.publishedAt,
           tags: videoData.tags.join(),
+          channelId: videoData.channelId,
           channelTitle: channelData.title,
           channelThumb: channelData.thumbnails.default.url,
           user: { connect: { id: profile?.id } },

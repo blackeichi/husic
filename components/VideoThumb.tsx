@@ -1,5 +1,6 @@
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/router";
 import { videoType } from "../pages";
 
 type Type = {
@@ -7,6 +8,7 @@ type Type = {
 };
 
 export const VideoThumb = ({ video }: Type) => {
+  const router = useRouter();
   return (
     <div className="flex sm:flex-nowrap  flex-wrap lg:w-full sm:w-screen w-72 items-center text-white font-MonoplexKRRegular sm:px-10 px-2 gap-4 cursor-pointer hover:scale-105 delay-300 duration-200">
       <img className="sm:w-96 w-72 rounded-lg" src={video.thumb} />
@@ -21,10 +23,19 @@ export const VideoThumb = ({ video }: Type) => {
         <div className="text-gray-400 sm:text-sm text-xs flex flex-col gap-1">
           <div className="flex items-center gap-2">
             <img
+              onClick={() => {
+                router.push(`watch/${video.channelId}`);
+              }}
               className="rounded-full sm:w-10 w-7"
               src={video.channelThumb}
             />
-            <h1>{video.channelTitle}</h1>
+            <h1
+              onClick={() => {
+                router.push(`watch/${video.channelId}`);
+              }}
+            >
+              {video.channelTitle}
+            </h1>
           </div>
           <div className="flex flex-wrap gap-2">
             {video.tags

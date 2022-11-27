@@ -30,6 +30,7 @@ export type videoType = {
   id: number;
   title: string;
   createdAt: string;
+  channelId: string;
   channelTitle: string;
   description: string;
   youtubeId: string;

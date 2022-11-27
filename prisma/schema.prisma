@@ -26,6 +26,7 @@ model Video {
   youtubeId String @unique
   channelTitle String
   thumb String
+  channelId String
   channelThumb String
   description String @db.MediumText
   createdAt String

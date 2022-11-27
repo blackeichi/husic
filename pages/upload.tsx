@@ -71,6 +71,7 @@ export default function Upload() {
       ).json();
       await setChannelData(channel?.items[0].snippet);
       await setVideoData(results?.items[0].snippet);
+      console.log(results);
       setId(formData.id);
       resetField("id");
     })();
