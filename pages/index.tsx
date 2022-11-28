@@ -3,28 +3,10 @@ import { faArrowDown, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useRef } from "react";
-import YouTube, { YouTubeProps } from "react-youtube";
 import useYoutube from "../libs/client/useYoutube";
 import { BeatLoader } from "react-spinners";
 import { VideoThumb } from "../components/VideoThumb";
 import { useRouter } from "next/router";
-
-//watch페이지 만들기, 유저가 올린 비디오, 저장한 비디오 prisma에 올리기, 댓글기능
-/* const opts: YouTubeProps["opts"] = {
-  height: "390",
-  width: "640",
-  playerVars: {
-    // https://developers.google.com/youtube/player_parameters
-    autoplay: 1,
-  },
-};
-<YouTube
-videoId="YjOHCcAGQQA"
-opts={opts}
-onEnd={(e) => {
-  e.target.stopVideo(0);
-}}
-/> */
 
 export type videoType = {
   id: number;
