@@ -10,14 +10,14 @@ async function handler(
   console.log(id);
   const videos = await client.video.findUnique({
     where: {
-      youtubeId: id,
+      youtubeId: id?.toString(),
     },
   });
-  /*   if (videos) {
+  if (videos) {
     res.json({
       ok: true,
       videos,
     });
-  } */
+  }
 }
 export default withHandler(["GET"], handler);
