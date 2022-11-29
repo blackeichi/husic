@@ -22,15 +22,15 @@ export const VideoThumb = ({ video }: Type) => {
         <div className="flex items-center gap-2 ">
           <h1
             onClick={() => {
-              router.push(`search/${video.user.id}`);
+              router.push(`/search/${video.user.id}`);
             }}
-            className="bg-gray-500 w-5 h-5 rounded-full flex items-center justify-center cursor-pointer"
+            className="bg-purple-600 w-5 h-5 rounded-full flex items-center justify-center cursor-pointer"
           >
             U
           </h1>
           <h1
             onClick={() => {
-              router.push(`search/${video.user.id}`);
+              router.push(`/search/${video.user.id}`);
             }}
             className="cursor-pointer"
           >
@@ -49,14 +49,14 @@ export const VideoThumb = ({ video }: Type) => {
           <div className="flex items-center gap-2">
             <img
               onClick={() => {
-                router.push(`search/${video.channelId}`);
+                router.push(`/search/${video.channelId}`);
               }}
               className="rounded-full sm:w-10 w-7 z-10 cursor-pointer"
               src={video.channelThumb}
             />
             <h1
               onClick={() => {
-                router.push(`watch/${video.channelId}`);
+                router.push(`/search/${video.channelId}`);
               }}
               className={"cursor-pointer"}
             >

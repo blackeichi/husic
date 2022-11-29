@@ -7,10 +7,17 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   const { id } = req.query;
-  console.log(id);
   const videos = await client.video.findUnique({
     where: {
       youtubeId: id?.toString(),
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          username: true,
+        },
+      },
     },
   });
   if (videos) {
