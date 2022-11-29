@@ -143,6 +143,14 @@ export default function HusicDetail() {
                 {video.channelTitle}
               </h1>
             </div>
+            <div className="flex flex-wrap gap-2">
+              {video.tags
+                .split(",")
+                .slice(0, 5)
+                .map((tag, index) => (
+                  <h1 key={index}>#{tag}</h1>
+                ))}
+            </div>
             <div
               id="description"
               className="bg-gray-500 p-2 box-border rounded-xl"
