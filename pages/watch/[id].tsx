@@ -22,11 +22,12 @@ const fetcher = (url: string) => fetch(url).then((response) => response.json());
 
 export default function HusicDetail() {
   const router = useRouter();
-  const { data, error } = useSWR(
+  const { data: videodata } = useSWR(
     router.query.id ? `/api/videos/${router.query.id}` : null,
     fetcher
   );
-  const video: videoType = data?.videos;
+  const video: videoType = videodata?.videos;
+  const { related } = videodata;
   //----window size
   const [screen, setScreen] = useState() as any;
   const [size, setSize] = useState("Web");
@@ -58,7 +59,7 @@ export default function HusicDetail() {
     }
   }, [arr, openDes]);
   return (
-    <div className="font-MonoplexKRRegular w-full min-h-screen flex flex-col items-center justify-center text-white sm:p-10 sm:pt-32 pt-28 pb-5">
+    <div className="font-MonoplexKRRegular w-full min-h-screen flex flex-col items-center justify-center text-white sm:p-10 sm:pt-36 pt-28 pb-5">
       {video ? (
         <div
           className="text-white flex flex-wrap justify-center sm:gap-5 gap-3"
@@ -70,9 +71,9 @@ export default function HusicDetail() {
                 onClick={() => {
                   router.push(`/search/${video.user.id}`);
                 }}
-                className="bg-gray-500 w-5 h-5 rounded-full flex items-center justify-center cursor-pointer"
+                className="flex items-center justify-center cursor-pointer text-lg"
               >
-                U
+                {video?.user.avatar ? video?.user.avatar : "🤗"}
               </h1>
               <h1
                 onClick={() => {

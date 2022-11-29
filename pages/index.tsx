@@ -22,6 +22,7 @@ export type videoType = {
   user: {
     id: number;
     username: string;
+    avatar: string;
   };
 };
 

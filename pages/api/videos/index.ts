@@ -9,12 +9,7 @@ async function handler(
   if (req.method === "GET") {
     const videos = await client.video.findMany({
       include: {
-        user: {
-          select: {
-            id: true,
-            username: true,
-          },
-        },
+        user: true,
       },
     });
     if (videos) {

@@ -9,12 +9,7 @@ async function handler(
   const videos = await client.video.findMany({
     take: 4,
     include: {
-      user: {
-        select: {
-          id: true,
-          username: true,
-        },
-      },
+      user: true,
     },
   });
   if (videos) {

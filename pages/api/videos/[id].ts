@@ -20,10 +20,27 @@ async function handler(
       },
     },
   });
+  const terms = videos?.tags.split(",").map((word) => ({
+    tags: {
+      contains: word,
+    },
+  }));
+  const related = await client.video.findMany({
+    where: {
+      OR: terms,
+      AND: {
+        id: {
+          not: videos?.id,
+        },
+      },
+    },
+  });
+  //console.log(terms);
   if (videos) {
     res.json({
       ok: true,
       videos,
+      related,
     });
   }
 }
