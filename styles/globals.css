@@ -68,3 +68,9 @@
     width: 0%;
   }
 }
+#relate::-webkit-scrollbar {
+  background-color: black;
+}
+#relate::-webkit-scrollbar-thumb {
+  background-color: #6b7280;
+}
