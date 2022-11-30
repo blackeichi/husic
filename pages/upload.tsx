@@ -16,7 +16,7 @@ import { useRouter } from "next/router";
 type FindForm = {
   id: string;
 };
-interface MutationResult {
+export interface MutationResult {
   ok: boolean;
 }
 type videoType = {
@@ -192,7 +192,7 @@ export default function Upload() {
             <div
               onClick={() => setOpen(true)}
               className={
-                "absolute right-2 rounded-full bg-slate-300 w-6 h-6 flex items-center justify-center top-10 cursor-pointer"
+                "absolute right-2 rounded-full bg-gray-400 w-6 h-6 flex items-center justify-center top-10 cursor-pointer"
               }
             >
               <h1>?</h1>

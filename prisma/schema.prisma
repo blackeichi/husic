@@ -21,6 +21,7 @@ model User {
   updatedAt DateTime @updatedAt
   favs Fav[]
   videos Video[]
+  comments Comment[]
 }
 model Video {
   id Int @id @default(autoincrement())
@@ -35,13 +36,25 @@ model Video {
   tags String @db.MediumText
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int
+  comments Comment[]
+  
 }
 
 model Fav {
   id        Int      @id @default(autoincrement())
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    Int
-  youtubeId Int
+  youtubeId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+model Comment {
+  id        Int      @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  videoId Int
+  youtubeId String
+  text String
+  createdAt DateTime @default(now())
 }

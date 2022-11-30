@@ -1,12 +1,16 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "../../../../libs/server/client";
 import withHandler from "../../../../libs/server/withHandler";
+import { withApiSession } from "../../../../libs/server/withSession";
 import { ResponseType } from "../../users/enter";
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const { id } = req.query;
+  const {
+    query: { id },
+    session: { user },
+  } = req;
   const videos = await client.video.findUnique({
     where: {
       youtubeId: id?.toString(),
@@ -35,13 +39,24 @@ async function handler(
       },
     },
   });
-  //console.log(terms);
+  const isLiked = Boolean(
+    await client.fav.findFirst({
+      where: {
+        youtubeId: videos?.youtubeId,
+        userId: user?.id,
+      },
+      select: {
+        id: true,
+      },
+    })
+  );
   if (videos) {
     res.json({
       ok: true,
       videos,
       related,
+      isLiked: !user ? false : isLiked,
     });
   }
 }
-export default withHandler(["GET"], handler);
+export default withApiSession(withHandler(["GET"], handler));

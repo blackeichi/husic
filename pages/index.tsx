@@ -98,7 +98,7 @@ export default function Home() {
       </div>
       <div
         ref={element}
-        className="w-full min-h-screen relative flex flex-col items-center pb-7 pt-20"
+        className="w-full min-h-screen relative flex flex-col pb-7 pt-20 md:px-10 md:items-start items-center"
       >
         <div className="flex text-white font-MonoplexKRRegular w-full justify-between sm:px-10 px-5 sm:text-base text-sm sm:py-10 py-5 items-center">
           <h1 className="font-bold sm:text-2xl text-lg">--RECOMMENDED</h1>

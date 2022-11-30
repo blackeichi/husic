@@ -7,9 +7,17 @@ import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { cls } from "../../libs/client/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHeart,
+  faPauseCircle,
+  faPlayCircle,
+  faTrashCan,
+} from "@fortawesome/free-solid-svg-icons";
 import { videoType } from "..";
 import useMutaion from "../../libs/client/useMutation";
+import { useForm } from "react-hook-form";
+import useUser from "../../libs/client/useUser";
+import { MutationResult } from "../upload";
 
 const opts: YouTubeProps["opts"] = {
   height: "390",
@@ -23,14 +31,37 @@ const opts: YouTubeProps["opts"] = {
 
 const fetcher = (url: string) => fetch(url).then((response) => response.json());
 
+type Tcomment = {
+  id: number;
+  text: string;
+  createdAt: string;
+  user: {
+    id: number;
+    avatar: null;
+    username: string;
+  };
+  youtubeId: string;
+};
+
 export default function HusicDetail() {
   const router = useRouter();
-  const { data: videodata } = useSWR(
+  const userdata = useUser(false);
+  const user = userdata?.user?.profile;
+  const { data: videodata, mutate } = useSWR(
     router.query.id ? `/api/videos/${router.query.id}` : null,
     fetcher
   );
   const video: videoType = videodata?.videos;
   const related = videodata?.related;
+  //----video alert
+  const [openInfo, setOpenInfo] = useState(false);
+  const [random, setRandom] = useState(0);
+  useEffect(() => {
+    setRandom(Math.round(Math.random() * related?.length));
+  }, [related?.length]);
+  const alldata = useYoutube();
+  const allvideos = alldata?.data?.videos;
+  const [autoPlay, setAutoPlay] = useState(true);
   //----window size
   const [screen, setScreen] = useState() as any;
   const [size, setSize] = useState("Web");
@@ -63,7 +94,61 @@ export default function HusicDetail() {
   //---------fav
   const [toggleFav] = useMutaion(`/api/videos/${router.query.id}/fav`);
   const clickFav = () => {
+    if (!videodata) return;
+    mutate({ ...videodata, isLiked: !videodata.isLiked }, false);
     toggleFav({});
+  };
+  //----------comment
+  const { register, handleSubmit, resetField } = useForm() as any;
+  //upload comment
+  const [upload, { loading, data, error }] = useMutaion<MutationResult>(
+    `/api/videos/${router.query.id}/comment`
+  );
+  //get comments
+  const { data: commenDdata, mutate: commentMutate } = useSWR(
+    router.query.id ? `/api/videos/${router.query.id}/comment` : null,
+    fetcher
+  );
+  const resetCom = () => {
+    resetField("comment");
+  };
+  const onValid = (text: any) => {
+    const uploadData = { ...text, videoId: video.id };
+    upload(uploadData);
+    resetField("comment");
+    if (!commenDdata) return;
+    const now = new Date(Date.now());
+    const date =
+      now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate();
+    const newComment = {
+      text: text.comment,
+      createdAt: date,
+      user: {
+        avatar: user.avatar,
+        username: user.username,
+      },
+    };
+    commentMutate(
+      { ...commenDdata, comments: [...commenDdata.comments, newComment] },
+      false
+    );
+  };
+  const comments = commenDdata?.comments;
+  const delComment = (id: number) => {
+    const ok = window.confirm("정말 삭제하시겠습니까? 😮");
+    if (ok) {
+      window.alert("삭제되었습니다. 👏");
+      upload({ del: id });
+      commentMutate(
+        {
+          ...commenDdata,
+          comments: commenDdata.comments.filter(
+            (com: Tcomment) => com.id !== id
+          ),
+        },
+        false
+      );
+    }
   };
   return (
     <div className="font-MonoplexKRRegular w-full min-h-screen flex flex-col items-center  text-white sm:p-10 sm:pt-36 pt-28 pb-5">
@@ -91,10 +176,10 @@ export default function HusicDetail() {
                   router.push(`/watch/${rel.youtubeId}`);
                 }}
                 key={index}
-                className="min-w-max cursor-pointer relative"
+                className="min-w-max cursor-pointer relative "
               >
                 <img
-                  className="2xl:w-80 lg:w-56 sm:w-44 w-36"
+                  className="2xl:w-72 lg:w-56 sm:w-44 w-36 rounded-lg"
                   src={rel.thumb}
                 ></img>
                 <div className="h-full w-full absolute top-0 sm:opacity-0 opacity-75 hover:opacity-75 duration-200">
@@ -115,7 +200,7 @@ export default function HusicDetail() {
             style={{ wordBreak: "break-all" }}
           >
             <div id="leftBox" className="flex flex-col relative">
-              <div className="flex justify-between absolute -top-6 w-full">
+              <div className="flex justify-between absolute -top-7 w-full">
                 <div className="items-center gap-2 flex">
                   <h1
                     onClick={() => {
@@ -134,14 +219,43 @@ export default function HusicDetail() {
                     {video?.user.username}
                   </h1>
                 </div>
-                <h1
-                  onClick={clickFav}
-                  className="text-lg text-gray-400 cursor-pointer hover:scale-110"
-                >
-                  <FontAwesomeIcon icon={faHeart} />
-                </h1>
+                <div className="flex items-center gap-3 text-xl">
+                  <div className="flex items-center gap-1">
+                    <h1 className="text-sm">
+                      {autoPlay ? "자동재생" : "일시중지"}
+                    </h1>
+                    <div
+                      className="cursor-pointer hover:scale-110"
+                      onClick={() => setAutoPlay((prev) => !prev)}
+                    >
+                      {autoPlay ? (
+                        <FontAwesomeIcon color="white" icon={faPlayCircle} />
+                      ) : (
+                        <FontAwesomeIcon color="gray" icon={faPauseCircle} />
+                      )}
+                    </div>
+                  </div>
+
+                  <h1
+                    onClick={clickFav}
+                    className={cls(
+                      "cursor-pointer hover:scale-110",
+                      videodata.isLiked ? "text-red-500" : "text-gray-400"
+                    )}
+                  >
+                    <FontAwesomeIcon icon={faHeart} />
+                  </h1>
+                </div>
               </div>
-              <div className="rounded-3xl overflow-hidden">
+              <div className="rounded-3xl overflow-hidden relative flex items-center justify-center">
+                {openInfo ? (
+                  <div className="absolute bg-black p-2">
+                    <h1>3초후 자동으로 다음 영상으로 넘어갑니다.</h1>
+                  </div>
+                ) : (
+                  <></>
+                )}
+
                 <YouTube
                   videoId={video?.youtubeId}
                   opts={{
@@ -166,10 +280,82 @@ export default function HusicDetail() {
                   }}
                   onEnd={(e) => {
                     e.target.stopVideo(0);
+                    if (autoPlay) {
+                      setOpenInfo(true);
+                      setTimeout(() => {
+                        router.push(
+                          `/watch/${
+                            related
+                              ? related[random]?.youtubeId
+                              : allvideos[random]?.youtubeId
+                            //관련 영상들 중 랜덤으로 재생, 관련영상이 없으면 아무거나
+                          }`
+                        );
+                        setOpenInfo(false);
+                      }, 3000);
+                    }
                   }}
                 />
               </div>
-              <div id="comment"></div>
+              <div id="comment" className="mt-3">
+                {user ? (
+                  <div id="upload-comment" className="flex gap-2 ">
+                    <div className="flex relative justify-center items-center min-w-max">
+                      <h1 className="text-2xl absolute opacity-50">
+                        {user.avatar ? user.avatar : "🤗"}
+                      </h1>
+                      <h1 className="z-10">{user?.username}</h1>
+                    </div>
+                    <form onSubmit={handleSubmit(onValid)} className="w-full">
+                      <input
+                        placeholder="댓글 추가.."
+                        {...register("comment", { require: true })}
+                        className="bg-transparent border-b-2 border-gray-400 w-full p-1 outline-none"
+                      />
+                      <div className="flex gap-3 justify-end mt-1">
+                        <div onClick={resetCom} className="p-1 cursor-pointer">
+                          취소
+                        </div>
+                        <button className="px-2 py-1 bg-gray-400 rounded-2xl">
+                          댓글
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                ) : (
+                  <div className="my-5">
+                    <h1>댓글을 추가하시려면 로그인을 해주세요..</h1>
+                  </div>
+                )}
+                <div id="get-comment" className="mt-2 flex flex-col gap-4">
+                  {comments?.map((com: Tcomment, index: any) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <h1 className="text-2xl">
+                        {com.user.avatar ? com.user.avatar : "🤗"}
+                      </h1>
+                      <div>
+                        <div className="text-sm text-gray-300 flex gap-2 items-center">
+                          <h1>{com.user.username}</h1>
+                          <h1>{com?.createdAt?.slice(0, 10)}</h1>
+                          {user?.id === com.user.id ? (
+                            <div
+                              onClick={() => {
+                                delComment(com.id);
+                              }}
+                              className="cursor-pointer"
+                            >
+                              <FontAwesomeIcon icon={faTrashCan} />
+                            </div>
+                          ) : (
+                            <></>
+                          )}
+                        </div>
+                        <h1>{com.text}</h1>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
             <div
               id="rightBox"
@@ -207,7 +393,12 @@ export default function HusicDetail() {
                   .split(",")
                   .slice(0, 5)
                   .map((tag, index) => (
-                    <h1 key={index}>#{tag}</h1>
+                    <h1
+                      className="font-Pretendard text-violet-300 opacity-75"
+                      key={index}
+                    >
+                      #{tag}
+                    </h1>
                   ))}
               </div>
               <div

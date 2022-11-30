@@ -38,7 +38,7 @@ export default function App({ Component, pageProps }: AppProps) {
               <div className="flex sm:gap-7 gap-2 sm:mr-10 sm:text-xl lg:text-2xl items-center relative">
                 <div className="gap-7 items-center sm:flex hidden">
                   <FloatingBtn isBlack={false} Text={"Upload"} href="/upload" />
-                  <FloatingBtn isBlack={true} Text={"Watch"} href="/watch" />
+                  <FloatingBtn isBlack={true} Text={"Listen"} href="/watch" />
                 </div>
                 <div className="gap-2 items-center sm:hidden flex text-black">
                   <div

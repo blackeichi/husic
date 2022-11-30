@@ -11,6 +11,9 @@ async function handler(
       include: {
         user: true,
       },
+      orderBy: {
+        id: "desc",
+      },
     });
     if (videos) {
       res.json({
