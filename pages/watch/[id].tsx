@@ -57,8 +57,8 @@ export default function HusicDetail() {
   const [openInfo, setOpenInfo] = useState(false);
   const [random, setRandom] = useState(0);
   useEffect(() => {
-    setRandom(Math.round(Math.random() * related?.length));
-  }, [related?.length]);
+    setRandom(Math.round(Math.random() * related?.length) - 1);
+  }, [related]);
   const alldata = useYoutube();
   const allvideos = alldata?.data?.videos;
   const [autoPlay, setAutoPlay] = useState(true);
@@ -163,11 +163,11 @@ export default function HusicDetail() {
               ? { width: "560px" }
               : { width: "700px" }
           }
-          className="flex flex-col mb-8"
+          className="flex flex-col mb-20"
         >
           <h1>관련 영상</h1>
           <div
-            className="flex overflow-x-scroll w-full sm:gap-1 gap-5"
+            className="flex overflow-x-scroll w-full sm:gap-10 gap-5 pr-3"
             id="relate"
           >
             {related?.map((rel: videoType, index: any) => (
@@ -176,18 +176,18 @@ export default function HusicDetail() {
                   router.push(`/watch/${rel.youtubeId}`);
                 }}
                 key={index}
-                className="min-w-max cursor-pointer relative "
+                className="min-w-max cursor-pointer relative mb-3"
               >
                 <img
                   className="2xl:w-72 lg:w-56 sm:w-44 w-36 rounded-lg"
                   src={rel.thumb}
                 ></img>
                 <div className="h-full w-full absolute top-0 sm:opacity-0 opacity-75 hover:opacity-75 duration-200">
-                  <div className="2xl:w-80 lg:w-56 sm:w-44 w-36 bg-black absolute bottom-0">
+                  <div className="2xl:w-72 lg:w-56 sm:w-44 w-36 bg-black absolute bottom-0">
                     <h1 className="sm:block hidden">{rel.title}</h1>
                   </div>
                 </div>
-                <div className="2xl:w-80 lg:w-56 sm:w-44 w-36 overflow-hidden">
+                <div className="2xl:w-72 lg:w-56 sm:w-44 w-36 overflow-hidden">
                   <h1 className="sm:hidden whitespace-nowrap">{rel.title}</h1>
                 </div>
               </div>
@@ -283,14 +283,22 @@ export default function HusicDetail() {
                     if (autoPlay) {
                       setOpenInfo(true);
                       setTimeout(() => {
-                        router.push(
-                          `/watch/${
-                            related
-                              ? related[random]?.youtubeId
-                              : allvideos[random]?.youtubeId
-                            //관련 영상들 중 랜덤으로 재생, 관련영상이 없으면 아무거나
-                          }`
-                        );
+                        if (related?.length !== 0) {
+                          router.push(
+                            `/watch/${
+                              related[random >= 0 ? random : 0]?.youtubeId
+                              //관련 영상들 중 랜덤으로 재생, 관련영상이 없으면 아무거나
+                            }`
+                          );
+                          console.log("관련영상!");
+                        } else {
+                          router.push(
+                            `/watch/${
+                              allvideos[random >= 0 ? random : 0]?.youtubeId
+                            }`
+                          );
+                          console.log("아무거나");
+                        }
                         setOpenInfo(false);
                       }, 3000);
                     }
