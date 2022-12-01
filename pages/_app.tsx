@@ -13,6 +13,9 @@ import {
   faUpload,
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import useSWR from "swr";
+import { MutationResult } from "./upload";
+import useMutaion from "../libs/client/useMutation";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -21,6 +24,14 @@ export default function App({ Component, pageProps }: AppProps) {
     router.push("/");
   };
   const [open, setOpen] = useState(false);
+  //-------user
+  const [logout] = useMutaion<MutationResult>("/api/users/me");
+  const onLogout = () => {
+    const ok = window.confirm("로그아웃 하시겠습니까? 👋");
+    if (ok) {
+      logout({});
+    }
+  };
   return (
     <RecoilRoot>
       <div className="bg-black w-full box-border sm:pt-0">
@@ -66,8 +77,15 @@ export default function App({ Component, pageProps }: AppProps) {
                 </div>
                 {open && (
                   <div className="bg-white absolute sm:-right-10 sm:top-14 right-0 top-8 rounded-lg items-center justify-center text-black sm:text-sm font-MonoplexKRRegular px-7 py-4">
-                    <h1>PROFILE</h1>
-                    <h1>LOG OUT</h1>
+                    <h1
+                      className="cursor-pointer"
+                      onClick={() => router.push("/profile")}
+                    >
+                      PROFILE
+                    </h1>
+                    <h1 className="cursor-pointer" onClick={onLogout}>
+                      LOG OUT
+                    </h1>
                   </div>
                 )}
               </div>
