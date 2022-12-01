@@ -1,6 +1,5 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import ReactPlayer from "react-player";
 import { useEffect, useState } from "react";
 import { FloatingBtn } from "../components/FloatingBtn";
 import { useRouter } from "next/router";
@@ -10,16 +9,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFileUpload,
   faHeadphones,
-  faUpload,
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import useSWR from "swr";
 import { MutationResult } from "./upload";
 import useMutaion from "../libs/client/useMutation";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const user = useUser(false);
+  const userData = useUser(false);
+  const [user, setUser] = useState() as any;
+  useEffect(() => {
+    if (userData?.user?.ok) {
+      setUser(userData);
+    } else {
+      setUser({ user: { ok: true }, isLoading: false });
+    }
+  }, [router.query.user, userData?.user?.ok]);
   const goHome = () => {
     router.push("/");
   };
@@ -30,6 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
     const ok = window.confirm("로그아웃 하시겠습니까? 👋");
     if (ok) {
       logout({});
+      router.push({ pathname: "/enter", query: { form: "Login" } });
     }
   };
   return (

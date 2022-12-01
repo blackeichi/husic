@@ -40,17 +40,14 @@ export default function Enter() {
       }
     } else {
       if (data?.ok) {
-        router.push("/");
+        router.push({ pathname: "/", query: { user: data?.user.id } });
       }
     }
   }, [router, data, form, setEnter]);
-  const user = useUser(false);
-  useEffect(() => {
-    if (user?.user?.profile) {
-      router.replace("/");
-      window.alert("비정상 접근입니다.");
-    }
-  }, [router, user]);
+  const { user, isLoading } = useUser(false);
+  if (user?.profile) {
+    router.replace("/");
+  }
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center text-white sm:gap-6 gap-3 pt-10">
       <h1 className="text-2xl font-MonoplexKRRegular">

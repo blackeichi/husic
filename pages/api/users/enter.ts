@@ -60,6 +60,7 @@ async function handler(
             await req.session.save();
             res.status(200).json({
               ok: true,
+              user: req.session.user,
             });
           } else {
             res
