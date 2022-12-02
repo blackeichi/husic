@@ -18,12 +18,19 @@ async function handler(
     where: {
       userId: user?.id,
     },
+    include: {
+      video: {
+        include: {
+          user: true,
+        },
+      },
+    },
   });
-  console.log(favs);
   if (videos) {
     res.json({
       ok: true,
       videos,
+      favs,
     });
   }
 }

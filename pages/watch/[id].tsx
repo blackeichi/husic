@@ -97,7 +97,7 @@ export default function HusicDetail() {
   const clickFav = () => {
     if (!videodata) return;
     mutate({ ...videodata, isLiked: !videodata.isLiked }, false);
-    toggleFav({});
+    toggleFav({ videoId: video.id });
   };
   //----------comment
   const { register, handleSubmit, resetField } = useForm() as any;

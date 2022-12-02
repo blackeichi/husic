@@ -11,10 +11,11 @@ async function handler(
   const {
     query: { id },
     session: { user },
+    body: { videoId },
   } = req;
   const alreadyExists = await client.fav.findFirst({
     where: {
-      youtubeId: id?.toString(),
+      videoId: videoId,
       userId: user?.id,
     },
   });
