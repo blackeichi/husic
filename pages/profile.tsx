@@ -4,14 +4,12 @@ import { Header } from "../components/Header";
 import useYoutube from "../libs/client/useYoutube";
 import { videoType } from ".";
 import { VideoThumb } from "../components/VideoThumb";
+import { Thumb } from "../components/Thumb";
 
 export default function Profile() {
   const { user, isLoading } = useUser();
   const data = useYoutube("query");
   const favs = data?.data?.favs;
-  if (favs) {
-    console.log(favs);
-  }
   return (
     <div className="font-MonoplexKRRegular w-full min-h-screen flex flex-col items-center justify-center text-white sm:gap-6 gap-3 sm:p-10 sm:pt-32 pt-24 pb-5 ">
       <Header />
@@ -31,7 +29,7 @@ export default function Profile() {
             <div id="select"></div>
             <div id="my-content" className="flex flex-col gap-10">
               {favs.map((content: any) => (
-                <VideoThumb key={content.videoId} video={content.video} />
+                <Thumb key={content.videoId} videos={content.video} />
               ))}
             </div>
           </div>
