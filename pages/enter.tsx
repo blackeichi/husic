@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { Button } from "../components/Buttton";
+import { Header } from "../components/Header";
 import { Input } from "../components/Input";
 import { enterState } from "../libs/client/atom";
 import useMutaion from "../libs/client/useMutation";
@@ -36,20 +37,22 @@ export default function Enter() {
   useEffect(() => {
     if (form === "Join") {
       if (data?.ok) {
-        setEnter("login");
+        router.reload();
       }
     } else {
       if (data?.ok) {
-        router.push({ pathname: "/", query: { user: data?.user.id } });
+        console.log("login");
+        router.push("/");
       }
     }
-  }, [router, data, form, setEnter]);
+  }, [router, data, setEnter, form]);
   const { user, isLoading } = useUser(false);
   if (user?.profile) {
     router.replace("/");
   }
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center text-white sm:gap-6 gap-3 pt-10">
+      <Header />
       <h1 className="text-2xl font-MonoplexKRRegular">
         {enterValue === "join" ? "회원가입" : "로그인"}
       </h1>

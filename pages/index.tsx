@@ -7,6 +7,7 @@ import useYoutube from "../libs/client/useYoutube";
 import { BeatLoader } from "react-spinners";
 import { VideoThumb } from "../components/VideoThumb";
 import { useRouter } from "next/router";
+import { Header } from "../components/Header";
 
 export type videoType = {
   id: number;
@@ -31,11 +32,12 @@ export default function Home() {
   const onMoveBox = () => {
     element.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-  const data = useYoutube("home");
+  const data = useYoutube("query");
   const videos = data?.data?.videos;
   const route = useRouter();
   return (
     <div className="w-full h-full flex flex-col overflow-hidden">
+      <Header />
       <div className="w-full h-screen relative flex items-center justify-end px-10 md:px-30">
         <div className="w-full h-full flex items-end absolute">
           <img className="bg-#9C5D3C h-3/5 lg:h-4/5" src="/img/rhythm.gif" />

@@ -19,7 +19,7 @@ async function handler(
       user: {
         select: {
           id: true,
-          username: true,
+          nickname: true,
         },
       },
     },
@@ -42,7 +42,7 @@ async function handler(
   const isLiked = Boolean(
     await client.fav.findFirst({
       where: {
-        youtubeId: videos?.youtubeId,
+        videoId: videos?.id,
         userId: user?.id,
       },
       select: {

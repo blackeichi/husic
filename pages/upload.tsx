@@ -12,6 +12,7 @@ import {
 import { cls } from "../libs/client/utils";
 import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 import { useRouter } from "next/router";
+import { Header } from "../components/Header";
 
 type FindForm = {
   id: string;
@@ -89,6 +90,7 @@ export default function Upload() {
   });
   return (
     <div className="font-MonoplexKRRegular w-full min-h-screen flex flex-col items-center justify-center text-white sm:gap-6 gap-3 sm:p-10 pt-20 pb-5 ">
+      <Header />
       {videoData ? (
         <>
           <div className="flex md:flex-row flex-col items-center justify-center gap-4 md:text-left text-center px-3 relative ">

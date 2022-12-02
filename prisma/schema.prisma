@@ -15,6 +15,7 @@ datasource db {
 model User {
   id Int @id @default(autoincrement())
   username String @unique
+  nickname String @unique
   avatar    String?
   password String
   createdAt DateTime @default(now())
@@ -37,14 +38,15 @@ model Video {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int
   comments Comment[]
-  
+  favs Fav[]
 }
 
 model Fav {
   id        Int      @id @default(autoincrement())
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    Int
-  youtubeId String
+  video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  videoId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

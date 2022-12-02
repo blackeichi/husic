@@ -32,6 +32,7 @@ async function handler(
           await client.user.create({
             data: {
               username,
+              nickname: username,
               password: hash,
             },
           });

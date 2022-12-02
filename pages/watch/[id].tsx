@@ -18,6 +18,7 @@ import useMutaion from "../../libs/client/useMutation";
 import { useForm } from "react-hook-form";
 import useUser from "../../libs/client/useUser";
 import { MutationResult } from "../upload";
+import { Header } from "../../components/Header";
 
 const opts: YouTubeProps["opts"] = {
   height: "390",
@@ -38,7 +39,7 @@ type Tcomment = {
   user: {
     id: number;
     avatar: null;
-    username: string;
+    nickname: string;
   };
   youtubeId: string;
 };
@@ -125,7 +126,7 @@ export default function HusicDetail() {
       createdAt: date,
       user: {
         avatar: user.avatar,
-        username: user.username,
+        nickname: user.nickname,
       },
     };
     commentMutate(
@@ -152,6 +153,7 @@ export default function HusicDetail() {
   };
   return (
     <div className="font-MonoplexKRRegular w-full min-h-screen flex flex-col items-center  text-white sm:p-10 sm:pt-36 pt-28 pb-5">
+      <Header />
       <div className="flex flex-col items-center">
         <div
           style={
@@ -216,7 +218,7 @@ export default function HusicDetail() {
                     }}
                     className="cursor-pointer"
                   >
-                    {video?.user.username}
+                    {video?.user.nickname}
                   </h1>
                 </div>
                 <div className="flex items-center gap-3 text-xl">
@@ -312,7 +314,7 @@ export default function HusicDetail() {
                       <h1 className="text-2xl absolute opacity-50">
                         {user.avatar ? user.avatar : "🤗"}
                       </h1>
-                      <h1 className="z-10">{user?.username}</h1>
+                      <h1 className="z-10">{user?.nickname}</h1>
                     </div>
                     <form onSubmit={handleSubmit(onValid)} className="w-full">
                       <input
@@ -343,7 +345,7 @@ export default function HusicDetail() {
                       </h1>
                       <div>
                         <div className="text-sm text-gray-300 flex gap-2 items-center">
-                          <h1>{com.user.username}</h1>
+                          <h1>{com.user.nickname}</h1>
                           <h1>{com?.createdAt?.slice(0, 10)}</h1>
                           {user?.id === com.user.id ? (
                             <div

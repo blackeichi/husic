@@ -1,5 +1,6 @@
 import { BeatLoader } from "react-spinners";
 import { videoType } from "..";
+import { Header } from "../../components/Header";
 import { VideoThumb } from "../../components/VideoThumb";
 import useYoutube from "../../libs/client/useYoutube";
 
@@ -8,6 +9,7 @@ export default function Upload() {
   const videos = data?.data?.videos;
   return (
     <div className="font-MonoplexKRRegular w-full min-h-screen flex flex-col items-center justify-center text-white sm:gap-6 gap-3 sm:p-10 sm:pt-32 pt-24 pb-5 ">
+      <Header />
       {videos ? (
         <div className="flex flex-col gap-10">
           {videos.map((video: videoType) => (

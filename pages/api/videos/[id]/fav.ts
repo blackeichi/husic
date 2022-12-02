@@ -27,10 +27,14 @@ async function handler(
   } else {
     await client.fav.create({
       data: {
-        youtubeId: id?.toString(),
         user: {
           connect: {
             id: user?.id,
+          },
+        },
+        video: {
+          connect: {
+            youtubeId: id?.toString(),
           },
         },
       },
