@@ -4,7 +4,6 @@ import { videoType } from "../pages";
 export const Thumb = (videos: any) => {
   const router = useRouter();
   const video = videos?.videos;
-  console.log(videos);
   return (
     <div
       onClick={() => {

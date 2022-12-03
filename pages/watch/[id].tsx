@@ -123,13 +123,16 @@ export default function HusicDetail() {
     const date =
       now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate();
     const newComment = {
+      id: commenDdata?.comments[0]?.id,
       text: text.comment,
       createdAt: date,
       user: {
         avatar: user.avatar,
         nickname: user.nickname,
+        id: commenDdata?.comments[0]?.userId,
       },
     };
+    console.log(newComment);
     commentMutate(
       { ...commenDdata, comments: [...commenDdata.comments, newComment] },
       false

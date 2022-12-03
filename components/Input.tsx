@@ -1,4 +1,5 @@
 import type { UseFormRegisterReturn } from "react-hook-form";
+import { cls } from "../libs/client/utils";
 
 type InputProps = {
   label: string;
@@ -9,6 +10,7 @@ type InputProps = {
   required: boolean;
   auto?: boolean;
   icon?: any;
+  black?: boolean;
 };
 
 export const Input = ({
@@ -20,9 +22,15 @@ export const Input = ({
   required,
   auto = false,
   icon,
+  black = false,
 }: InputProps) => {
   return (
-    <div className="text-white flex flex-col gap-2 w-full">
+    <div
+      className={cls(
+        "flex flex-col gap-1 w-full",
+        black ? "text-black" : "text-white "
+      )}
+    >
       <label>
         {icon && icon}
         {" " + label}
