@@ -19,6 +19,7 @@ import { useForm } from "react-hook-form";
 import useUser from "../../libs/client/useUser";
 import { MutationResult } from "../upload";
 import { Header } from "../../components/Header";
+import { Thumb } from "../../components/Thumb";
 
 const opts: YouTubeProps["opts"] = {
   height: "390",
@@ -168,31 +169,9 @@ export default function HusicDetail() {
           className="flex flex-col mb-20"
         >
           <h1>관련 영상</h1>
-          <div
-            className="flex overflow-x-scroll w-full sm:gap-10 gap-5 pr-3"
-            id="relate"
-          >
+          <div className="flex overflow-x-scroll w-full gap-5 pr-3" id="relate">
             {related?.map((rel: videoType, index: any) => (
-              <div
-                onClick={() => {
-                  router.push(`/watch/${rel.youtubeId}`);
-                }}
-                key={index}
-                className="min-w-max cursor-pointer relative mb-3"
-              >
-                <img
-                  className="2xl:w-72 lg:w-56 sm:w-44 w-36 rounded-lg"
-                  src={rel.thumb}
-                ></img>
-                <div className="h-full w-full absolute top-0 sm:opacity-0 opacity-75 hover:opacity-75 duration-200">
-                  <div className="2xl:w-72 lg:w-56 sm:w-44 w-36 bg-black absolute bottom-0">
-                    <h1 className="sm:block hidden">{rel.title}</h1>
-                  </div>
-                </div>
-                <div className="2xl:w-72 lg:w-56 sm:w-44 w-36 overflow-hidden">
-                  <h1 className="sm:hidden whitespace-nowrap">{rel.title}</h1>
-                </div>
-              </div>
+              <Thumb videos={rel} key={index} />
             ))}
           </div>
         </div>

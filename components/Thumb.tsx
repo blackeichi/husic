@@ -3,30 +3,26 @@ import { videoType } from "../pages";
 
 export const Thumb = (videos: any) => {
   const router = useRouter();
-  const video = videos?.video;
+  const video = videos?.videos;
+  console.log(videos);
   return (
     <div
-      className="flex overflow-x-scroll w-full sm:gap-10 gap-5 pr-3"
-      id="relate"
+      onClick={() => {
+        router.push(`/watch/${video?.youtubeId}`);
+      }}
+      className="min-w-max cursor-pointer mb-3 relative"
     >
-      <div
-        onClick={() => {
-          router.push(`/watch/${video.youtubeId}`);
-        }}
-        className="min-w-max cursor-pointer dataative mb-3"
-      >
-        <img
-          className="2xl:w-72 lg:w-56 sm:w-44 w-36 rounded-lg"
-          src={video.thumb}
-        ></img>
-        <div className="h-full w-full absolute top-0 sm:opacity-0 opacity-75 hover:opacity-75 duration-200">
-          <div className="2xl:w-72 lg:w-56 sm:w-44 w-36 bg-black absolute bottom-0">
-            <h1 className="sm:block hidden">{video.title}</h1>
-          </div>
+      <img
+        className="2xl:w-72 lg:w-64 sm:w-52 w-40 rounded-lg"
+        src={video?.thumb}
+      ></img>
+      <div className="h-full w-full absolute top-0 sm:opacity-0 opacity-75 hover:opacity-75 duration-200">
+        <div className="2xl:w-72 lg:w-64 sm:w-52 w-40 bg-black absolute bottom-0">
+          <h1 className="md:block hidden">{video?.title}</h1>
         </div>
-        <div className="2xl:w-72 lg:w-56 sm:w-44 w-36 overflow-hidden">
-          <h1 className="sm:hidden whitespace-nowrap">{video.title}</h1>
-        </div>
+      </div>
+      <div className="2xl:w-72 lg:w-64 sm:w-52 w-40 overflow-hidden">
+        <h1 className="md:hidden whitespace-nowrap">{video?.title}</h1>
       </div>
     </div>
   );

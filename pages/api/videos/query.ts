@@ -26,10 +26,16 @@ async function handler(
       },
     },
   });
+  const mines = await client.video.findMany({
+    where: {
+      userId: user?.id,
+    },
+  });
   if (videos) {
     res.json({
       ok: true,
       videos,
+      mines,
       favs,
     });
   }
