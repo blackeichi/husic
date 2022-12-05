@@ -34,3 +34,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 Home - profile - upload
+
+//vercel에서 로그아웃 기능 안됌.
+//동영상 삭제 기능 추가
+//Search 기능 추가.
