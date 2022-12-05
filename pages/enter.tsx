@@ -1,3 +1,4 @@
+import { User } from "@prisma/client";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -16,13 +17,15 @@ type EnterForm = {
 };
 interface MutationResult {
   ok: boolean;
+  user?: User;
+  error?: string;
 }
 
 export default function Enter() {
   const router = useRouter();
   const { form } = router.query;
   const { register, handleSubmit, resetField } = useForm<EnterForm>();
-  const [enter, { loading, data, error }] =
+  const [enter, { loading, data }] =
     useMutaion<MutationResult>("/api/users/enter");
   const onValid = (formData: EnterForm) => {
     if (loading) return;

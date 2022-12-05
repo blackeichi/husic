@@ -21,6 +21,7 @@ export type videoType = {
   tags: string;
   thumb: string;
   user: {
+    nickname: string;
     id: number;
     username: string;
     avatar: string;

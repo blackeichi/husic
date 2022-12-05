@@ -2,7 +2,7 @@ import { useState } from "react";
 
 type UseMutaitionState<T> = {
   loading: boolean;
-  data?: object;
+  data?: T;
   error?: object;
 };
 type UseMutaitionResult<T> = [(data: any) => void, UseMutaitionState<T>];
