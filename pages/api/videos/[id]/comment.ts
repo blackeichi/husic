@@ -38,15 +38,17 @@ async function handler(
       });
       res.json({ ok: true });
     } else {
-      const comments = await client.comment.create({
-        data: {
-          youtubeId: id?.toString(),
-          text: comment,
-          user: { connect: { id: user?.id } },
-          video: { connect: { id: videoId } },
-        },
-      });
-      res.json({ ok: true, comments });
+      if (id) {
+        const comments = await client.comment.create({
+          data: {
+            youtubeId: id?.toString(),
+            text: comment,
+            user: { connect: { id: user?.id } },
+            video: { connect: { id: videoId } },
+          },
+        });
+        res.json({ ok: true, comments });
+      }
     }
 
     /*
