@@ -19,6 +19,7 @@ type FindForm = {
 };
 export interface MutationResult {
   ok: boolean;
+  error?: string;
 }
 type videoType = {
   channelId: string;
