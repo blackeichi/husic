@@ -39,6 +39,7 @@ model Video {
   userId Int
   comments Comment[]
   favs Fav[]
+  @@index([userId])
 }
 
 model Fav {
@@ -49,6 +50,8 @@ model Fav {
   videoId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  @@index([userId])
+  @@index([videoId])
 }
 model Comment {
   id        Int      @id @default(autoincrement())
@@ -59,4 +62,6 @@ model Comment {
   youtubeId String
   text String
   createdAt DateTime @default(now())
+  @@index([userId])
+  @@index([videoId])
 }
