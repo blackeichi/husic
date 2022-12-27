@@ -34,7 +34,7 @@ export const VideoThumb = ({ video }: Type) => {
             }}
             className="cursor-pointer"
           >
-            {video?.user.username}
+            {video?.user.nickname}
           </h1>
         </div>
         <h1

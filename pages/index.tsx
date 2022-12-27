@@ -78,6 +78,7 @@ export default function Home() {
             </div>
             <Link
               href={"https://github.com/blackeichi"}
+              target="_blank"
               className="flex gap-3 items-center"
             >
               <FontAwesomeIcon icon={faGithub} />
@@ -85,15 +86,18 @@ export default function Home() {
             </Link>
             <Link
               href="https://velog.io/@blackeichi"
+              target="_blank"
               className="flex gap-3 items-center"
             >
               <FontAwesomeIcon icon={faBlogger} />
               https://velog.io/@blackeichi
             </Link>
           </div>
-          <div className="cursor-pointer hover:scale-105 duration-200 font-KOFIHDrLEEJWTTF p-3 bg-white text-black rounded-xl text-xl">
-            About-Me
-          </div>
+          <Link href="https://www.jwportfolio.site/" target="_blank">
+            <div className="cursor-pointer hover:scale-105 duration-200 font-KOFIHDrLEEJWTTF p-3 bg-white text-black rounded-xl text-xl">
+              About-Me
+            </div>
+          </Link>
         </div>
         <div className="w-full max-w-2xl h-full absolute flex items-center">
           <div className="w-3/4 h-3/4 md:block hidden absolute -left-20 aspect-video bg-gradient-to-b from-violet-900 to-black border-8 border-gray-900 " />

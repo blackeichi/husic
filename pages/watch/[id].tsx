@@ -9,6 +9,7 @@ import { cls } from "../../libs/client/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHeart,
+  faImage,
   faPauseCircle,
   faPlayCircle,
   faTrashCan,
@@ -106,6 +107,8 @@ export default function HusicDetail() {
   const [upload, { loading, data, error }] = useMutaion<MutationResult>(
     `/api/videos/${router.query.id}/comment`
   );
+  //screen cover
+  const [openCover, setOpenCover] = useState(true);
   //get comments
   const { data: commenDdata, mutate: commentMutate } = useSWR(
     router.query.id ? `/api/videos/${router.query.id}/comment` : null,
@@ -156,7 +159,10 @@ export default function HusicDetail() {
     }
   };
   return (
-    <div className="font-MonoplexKRRegular w-full min-h-screen flex flex-col items-center  text-white sm:p-10 sm:pt-36 pt-28 pb-5">
+    <div className="font-MonoplexKRRegular w-full min-h-screen flex flex-col items-center text-white sm:p-10 sm:pt-36 pt-28 pb-5">
+      {openCover ? (
+        <div className="w-full h-screen fixed top-0 bg-black z-30"></div>
+      ) : null}
       <Header />
       <div className="flex flex-col items-center">
         <div
@@ -203,7 +209,11 @@ export default function HusicDetail() {
                     {video?.user.nickname}
                   </h1>
                 </div>
+
                 <div className="flex items-center gap-3 text-xl">
+                  <h1>
+                    <FontAwesomeIcon icon={faImage} />
+                  </h1>
                   <div className="flex items-center gap-1">
                     <h1 className="text-sm">
                       {autoPlay ? "자동재생" : "일시중지"}
