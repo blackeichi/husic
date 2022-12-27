@@ -161,7 +161,7 @@ export default function HusicDetail() {
   return (
     <div className="font-MonoplexKRRegular w-full min-h-screen flex flex-col items-center text-white sm:p-10 sm:pt-36 pt-28 pb-5">
       {openCover ? (
-        <div className="w-full h-screen fixed top-0 bg-black z-30"></div>
+        <div className="Cover w-full h-screen fixed top-0 bg-black z-30"></div>
       ) : null}
       <Header />
       <div className="flex flex-col items-center">

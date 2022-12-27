@@ -28,7 +28,7 @@ export const Input = ({
     <div
       className={cls(
         "flex flex-col gap-1 w-full",
-        black ? "text-black" : "text-white "
+        black ? "text-black" : "text-white"
       )}
     >
       <label>
