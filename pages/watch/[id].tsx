@@ -108,7 +108,7 @@ export default function HusicDetail() {
     `/api/videos/${router.query.id}/comment`
   );
   //screen cover
-  const [openCover, setOpenCover] = useState(true);
+  const [openCover, setOpenCover] = useState(false);
   //get comments
   const { data: commenDdata, mutate: commentMutate } = useSWR(
     router.query.id ? `/api/videos/${router.query.id}/comment` : null,
@@ -158,10 +158,58 @@ export default function HusicDetail() {
       );
     }
   };
+  const keydownEvent = (event: any) => {
+    if (event.code === "Escape") {
+      setOpenCover(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("keydown", keydownEvent);
+    return () => {
+      document.removeEventListener("keydown", keydownEvent);
+    };
+  }, []);
+  const delVideo = (id: number) => {
+    const ok = window.confirm("정말 영상을 삭제하시겠습니까? 😮");
+    if (ok) {
+      window.alert("삭제되었습니다. 👏");
+      const data = { id: id };
+      fetch(`/api/videos/${router.query.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.ok) {
+            //링크 이동하기
+          }
+        });
+    }
+  };
   return (
     <div className="font-MonoplexKRRegular w-full min-h-screen flex flex-col items-center text-white sm:p-10 sm:pt-36 pt-28 pb-5">
       {openCover ? (
-        <div className="Cover w-full h-screen fixed top-0 bg-black z-30"></div>
+        <div className="Cover w-screen h-screen fixed top-0 bg-black z-30 flex justify-center items-center">
+          <div className="absolute top-5 right-10 flex items-center gap-3">
+            <h1 className="font-MonoplexKRRegular text-slate-400 ">
+              집중 모드
+            </h1>
+            <h1
+              onClick={() => setOpenCover(false)}
+              className=" text-3xl cursor-pointer hover:scale-110"
+            >
+              X
+            </h1>
+          </div>
+
+          <div className="w-80 flex flex-col items-center">
+            <img className="w-full rounded-md" src={video.thumb} />
+            <h1>{video.title}</h1>
+          </div>
+        </div>
       ) : null}
       <Header />
       <div className="flex flex-col items-center">
@@ -208,12 +256,19 @@ export default function HusicDetail() {
                   >
                     {video?.user.nickname}
                   </h1>
+                  {video?.user.id === user?.id ? (
+                    <div
+                      onClick={() => {
+                        delVideo(video.id);
+                      }}
+                      className="cursor-pointer"
+                    >
+                      <FontAwesomeIcon icon={faTrashCan} />
+                    </div>
+                  ) : null}
                 </div>
 
                 <div className="flex items-center gap-3 text-xl">
-                  <h1>
-                    <FontAwesomeIcon icon={faImage} />
-                  </h1>
                   <div className="flex items-center gap-1">
                     <h1 className="text-sm">
                       {autoPlay ? "자동재생" : "일시중지"}
@@ -229,7 +284,15 @@ export default function HusicDetail() {
                       )}
                     </div>
                   </div>
-
+                  <h1
+                    onClick={() => {
+                      document.documentElement.requestFullscreen();
+                      setOpenCover(true);
+                    }}
+                    className="cursor-pointer hover:scale-110"
+                  >
+                    <FontAwesomeIcon icon={faImage} />
+                  </h1>
                   <h1
                     onClick={clickFav}
                     className={cls(

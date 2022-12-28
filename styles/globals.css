@@ -68,7 +68,15 @@
     width: 0%;
   }
 }
+
+::-webkit-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  display: none; /* Chrome, Safari, Opera*/
+}
+
 #relate::-webkit-scrollbar {
+  display: block;
   background-color: black;
 }
 #relate::-webkit-scrollbar-thumb {

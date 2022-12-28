@@ -9,7 +9,6 @@ export default function App({ Component, pageProps }: AppProps) {
     <RecoilRoot>
       <Head>
         <title>Husic</title>
-        <link rel="icon" type="image/x-icon" href="img/logo.PNG" />
       </Head>
       <div className="bg-black w-full box-border sm:pt-0">
         <Component {...pageProps} />
