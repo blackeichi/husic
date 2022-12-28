@@ -13,11 +13,11 @@ async function handler(
   } = req;
   if (req.method === "DELETE") {
     const { id } = req.body;
-    /* const video = await client.video.delete({
+    const video = await client.video.delete({
       where: {
         id: id,
       },
-    }); */
+    });
     res.json({ ok: true });
   } else {
     const videos = await client.video.findUnique({

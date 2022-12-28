@@ -184,7 +184,7 @@ export default function HusicDetail() {
         .then((response) => response.json())
         .then((data) => {
           if (data.ok) {
-            //링크 이동하기
+            router.push(`/watch`);
           }
         });
     }
