@@ -1,4 +1,4 @@
 <h1>HUSIC</h1>
 <div>
-  ![logo](https://user-images.githubusercontent.com/87626378/210184098-e7373a81-1d02-4a4b-9191-5ca77bcc8467.PNG)
+  ![logo](https://user-images.githubusercontent.com/87626378/210184107-5005c44e-feca-4396-b304-94f2ac13a875.PNG)
 </div>
